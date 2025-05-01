@@ -25,19 +25,11 @@ const Routes = () => {
       children: [
         {
           path: "login",
-          element: (
-            <GuestGuard>
-              <Login />
-            </GuestGuard>
-          ),
+          element: <Login />,
         },
         {
           path: "register",
-          element: (
-            <GuestGuard>
-              <Register />
-            </GuestGuard>
-          ),
+          element: <Register />,
         },
       ],
     },

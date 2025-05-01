@@ -33,8 +33,9 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       removeToken();
-      window.location.href = '/login';
     }
+    setTimeout(() => {
+    }, 5000);
     return Promise.reject(error);
   }
 );

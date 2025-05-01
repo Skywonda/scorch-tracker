@@ -6,7 +6,6 @@ const GuestGuard = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    // Show loading state while checking authentication
     return (
       <div className="min-h-screen flex justify-center items-center bg-gray-50">
         <div className="text-center">
@@ -18,11 +17,9 @@ const GuestGuard = ({ children }) => {
   }
 
   if (isAuthenticated) {
-    // Redirect to dashboard if already authenticated
     return <Navigate to="/dashboard" />;
   }
 
-  // Render children if not authenticated
   return <>{children}</>;
 };
 

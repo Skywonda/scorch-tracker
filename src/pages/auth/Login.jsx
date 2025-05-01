@@ -22,9 +22,7 @@ const Login = () => {
     },
   });
 
-  const onSubmit = async (data, event) => {
-    console.log("event", event);
-    event.preventDefault();
+  const onSubmit = async (data) => {
     await login(data);
   };
 
