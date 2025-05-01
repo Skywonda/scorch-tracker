@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Routes from "./routes";
 import { AuthProvider } from "@contexts/AuthContext";
 import "./styles/index.css";
+import ToastProvider from "./components/common/ToastProvider";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -14,6 +15,9 @@ const queryClient = new QueryClient({
       retry: 1,
       staleTime: 5 * 60 * 1000, // 5 minutes
     },
+    mutations: {
+      useErrorBoundary: false,
+    },
   },
 });
 
@@ -21,9 +25,11 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </ToastProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>
