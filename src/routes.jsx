@@ -17,6 +17,7 @@ import Settings from "@pages/settings/Settings";
 // Auth guard for protected routes
 import AuthGuard from "@components/common/AuthGuard";
 import GuestGuard from "@components/common/GuestGuard";
+import RoutineDetails from "./pages/routines/RoutineDetails";
 
 const Routes = () => {
   return useRoutes([
@@ -45,6 +46,7 @@ const Routes = () => {
         { path: "dashboard", element: <Dashboard /> },
         { path: "routines", element: <RoutinesList /> },
         { path: "routines/new", element: <RoutineForm /> },
+        { path: "routines/:routineId", element: <RoutineDetails /> },
         { path: "routines/:routineId/edit", element: <RoutineForm /> },
         { path: "routines/:routineId/tasks/new", element: <TaskForm /> },
         {

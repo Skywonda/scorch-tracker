@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { FiSave, FiX } from "react-icons/fi";
+import { FiSave, FiX, FiInfo } from "react-icons/fi";
 import useRoutines from "@hooks/useRoutines";
 import { formatForApi } from "@utils/dateUtils";
 
@@ -70,19 +70,53 @@ const RoutineForm = () => {
 
     if (isEditing) {
       await updateRoutine({ routineId, data: formattedData });
+      navigate(`/routines/${routineId}`);
     } else {
-      await createRoutine(formattedData);
+      const newRoutine = await createRoutine(formattedData);
+      navigate(`/routines/${newRoutine.id}/tasks/new`);
     }
-
-    navigate("/routines");
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-3xl mx-auto">
+      {/* Explanation Card for New Users */}
+      {!isEditing && (
+        <Card className="mb-6 bg-blue-50 border-blue-200">
+          <Card.Body>
+            <div className="flex items-start">
+              <div className="bg-blue-100 p-2 rounded-full text-blue-600 mr-4 flex-shrink-0">
+                <FiInfo className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">
+                  Creating a Routine
+                </h3>
+                <div className="space-y-2 text-blue-700">
+                  <p>
+                    A <strong>routine</strong> is a collection of related tasks
+                    that you perform regularly.
+                  </p>
+                  <p className="text-sm">Examples of routines:</p>
+                  <ul className="list-disc list-inside ml-4 text-sm">
+                    <li>Morning Workout</li>
+                    <li>Evening Study Plan</li>
+                    <li>Weekend Chores</li>
+                  </ul>
+                  <p className="text-sm italic mt-2">
+                    After creating your routine, you'll be able to add specific
+                    tasks to it.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
+      )}
+
       <Card>
         <Card.Header>
           <Card.Title>
-            {isEditing ? "Edit Routine" : "Create Routine"}
+            {isEditing ? "Edit Routine" : "Create New Routine"}
           </Card.Title>
         </Card.Header>
 
@@ -96,6 +130,7 @@ const RoutineForm = () => {
               <Input
                 id="title"
                 label="Routine Title"
+                placeholder="Name your collection of tasks (e.g., 'Morning Workout')"
                 error={errors.title?.message}
                 {...register("title", {
                   required: "Title is required",
@@ -105,6 +140,7 @@ const RoutineForm = () => {
               <TextArea
                 id="description"
                 label="Description (optional)"
+                placeholder="What's the purpose of this routine? When do you typically do these tasks?"
                 rows={4}
                 error={errors.description?.message}
                 {...register("description")}
@@ -164,6 +200,21 @@ const RoutineForm = () => {
           )}
         </Card.Body>
       </Card>
+
+      {!isEditing && (
+        <div className="mt-6 bg-gray-50 rounded-lg p-4 border border-gray-200">
+          <h4 className="font-medium text-gray-700 mb-2">What happens next?</h4>
+          <p className="text-gray-600 mb-2">
+            After creating your routine, you'll be able to add specific tasks to
+            it. Tasks are the individual activities you want to track within
+            this routine.
+          </p>
+          <p className="text-gray-600 text-sm italic">
+            For example, if your routine is "Morning Workout", your tasks might
+            include "30 pushups", "5-minute plank", and "2-mile run".
+          </p>
+        </div>
+      )}
     </div>
   );
 };
