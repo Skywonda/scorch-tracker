@@ -29,7 +29,7 @@ const Settings = () => {
   } = useForm({
     defaultValues: {
       email: "",
-      phone_number: "",
+      whatsapp_number: "",
       whatsapp_opt_in: true,
       roast_intensity: "medium",
     },
@@ -40,7 +40,7 @@ const Settings = () => {
     if (user) {
       reset({
         email: user.email || "",
-        phone_number: user.phone_number || "",
+        whatsapp_number: user.whatsapp_number || "",
         whatsapp_opt_in:
           user.whatsapp_opt_in === undefined ? true : user.whatsapp_opt_in,
         roast_intensity: user.roast_intensity || "medium",
@@ -90,12 +90,12 @@ const Settings = () => {
             />
 
             <Input
-              id="phone_number"
+              id="whatsapp_number"
               label="WhatsApp Phone Number"
               type="tel"
               leftIcon={<FiPhone className="h-5 w-5 text-gray-400" />}
-              error={errors.phone_number?.message}
-              {...register("phone_number", {
+              error={errors.whatsapp_number?.message}
+              {...register("whatsapp_number", {
                 pattern: {
                   value: /^\+?[0-9]{10,15}$/,
                   message: "Invalid phone number format",
